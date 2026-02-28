@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Profile - LifeLink</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Georgia, "Times New Roman", Times, serif;
+      }
+
+      body {
+        background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+        color: #1e293b;
+        min-height: 100vh;
+      }
+
+      /* Header Styles */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+        z-index: 1000;
+        padding: 10px 16px;
+      }
+
+      .header-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        text-decoration: none;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
+      }
+
+      .logo-icon i {
+        color: white;
+        font-size: 1.1rem;
+      }
+
+      .logo span {
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #64748b;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: white;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+        padding: 80px 24px 24px;
+        list-style: none;
+        transition: right 0.3s ease;
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        margin-bottom: 8px;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        background: #fff1f2;
+        color: #ff4757;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      @media (min-width: 769px) {
+        header {
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 90%;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          border-radius: 60px;
+          padding: 12px 25px;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .menu-btn {
+          display: none;
+        }
+
+        .nav-links {
+          position: static;
+          width: auto;
+          height: auto;
+          background: none;
+          box-shadow: none;
+          padding: 0;
+          display: flex;
+          gap: 5px;
+        }
+
+        .nav-links a {
+          padding: 8px 16px;
+          font-size: 0.95rem;
+          color: #1a1a2e;
+        }
+
+        .nav-links a:hover {
+          background: rgba(255, 71, 87, 0.1);
+          color: #ff4757;
+        }
+
+        .nav-links a.active {
+          background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+          color: white;
+          box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        .nav-cta {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+
+        .btn-login {
+          padding: 8px 20px;
+          background: transparent;
+          border: 2px solid #ff4757;
+          color: #ff4757;
+          border-radius: 30px;
+          font-weight: 600;
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+          background: #ff4757;
+          color: white;
+        }
+
+        .btn-register {
+          padding: 8px 20px;
+          background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+          border: none;
+          color: white;
+          border-radius: 30px;
+          font-weight: 600;
+          text-decoration: none;
+          font-size: 0.9rem;
+          box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+          transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+        }
+      }
+
+      /* Emergency Float */
+      .emergency-float {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .emergency-float:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(255, 71, 87, 0.6);
+      }
+
+      .emergency-float i {
+        font-size: 1.2rem;
+      }
+
+      .emergency-float .phone-number {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      /* Page Content */
+      .page-content {
+        padding-top: 100px;
+        padding-bottom: 60px;
+        min-height: calc(100vh - 300px);
+      }
+
+      .profile-container {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 24px;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Sidebar */
+      .profile-sidebar {
+        background: white;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 20px 60px rgba(255, 71, 87, 0.15);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        height: fit-content;
+      }
+
+      .profile-avatar {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .profile-avatar i {
+        font-size: 5rem;
+        color: #ff4757;
+        opacity: 0.9;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .info-grid p {
+        background: #f8fafc;
+        padding: 12px 16px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+      }
+
+      .info-grid p:hover {
+        background: white;
+        border-color: #ff4757;
+        transform: translateX(2px);
+      }
+
+      .info-grid i {
+        color: #ff4757;
+        width: 20px;
+        font-size: 1.1rem;
+      }
+
+      .info-grid strong {
+        color: #1e293b;
+        margin-left: 4px;
+      }
+
+      .btn {
+        padding: 12px 20px;
+        border-radius: 100px;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        width: 100%;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+      }
+
+      .btn-secondary:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+      }
+
+      .btn-small {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+
+      .logout-btn {
+        width: 100%;
+        padding: 12px;
+        background: #fee2e2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+        border-radius: 100px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 16px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .logout-btn:hover {
+        background: #fecaca;
+        transform: translateY(-2px);
+      }
+
+      /* Eligibility Card */
+      .eligibility-card {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e6f0fa 100%);
+        border-radius: 20px;
+        padding: 20px;
+        margin-top: 20px;
+        border: 1px solid rgba(26, 93, 156, 0.1);
+      }
+
+      .eligibility-card h4 {
+        color: #334155;
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .eligibility-card h4 i {
+        color: #1a5d9c;
+      }
+
+      .eligibility-card .date {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1a5d9c;
+        margin-bottom: 4px;
+      }
+
+      .eligibility-card .note {
+        color: #64748b;
+        font-size: 0.9rem;
+      }
+
+      .progress-bar {
+        margin-top: 12px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 100px;
+        height: 6px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 6px;
+        background: #ff4757;
+        border-radius: 100px;
+        transition: width 0.3s ease;
+      }
+
+      /* Main Content */
+      .profile-main {
+        flex: 1;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(255, 71, 87, 0.15);
+        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 25px 80px rgba(255, 71, 87, 0.2);
+      }
+
+      .stat-card i {
+        font-size: 2rem;
+        color: #ff4757;
+        margin-bottom: 8px;
+        opacity: 0.9;
+      }
+
+      .stat-card h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 4px;
+      }
+
+      .stat-card p {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .section {
+        background: white;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 20px 60px rgba(255, 71, 87, 0.15);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        margin-bottom: 24px;
+      }
+
+      .section h2 {
+        margin-bottom: 20px;
+        color: #1e293b;
+        border-bottom: 2px solid rgba(255, 71, 87, 0.2);
+        padding-bottom: 12px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .section h2 i {
+        color: #ff4757;
+      }
+
+      .history-list {
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 8px;
+      }
+
+      .history-list::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .history-list::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 10px;
+      }
+
+      .history-list::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+
+      .history-item {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 12px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .history-item:hover {
+        background: white;
+        border-color: #ff4757;
+        transform: translateX(2px);
+        box-shadow: 0 10px 25px rgba(255, 71, 87, 0.1);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        gap: 4px;
+      }
+
+      .status-badge.completed {
+        background: #e8f7ef;
+        color: #0b8a4c;
+      }
+
+      .status-badge.pending {
+        background: #fff8e5;
+        color: #b55f0a;
+      }
+
+      .status-badge.scheduled {
+        background: #e8f0fe;
+        color: #1a5d9c;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        background: #f8fafc;
+        border-radius: 20px;
+        border: 2px dashed #e2e8f0;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        color: #cbd5e1;
+        margin-bottom: 16px;
+      }
+
+      .empty-state h3 {
+        font-size: 1.1rem;
+        color: #475569;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .empty-state p {
+        color: #94a3b8;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Edit Form */
+      .profile-edit {
+        display: none;
+      }
+
+      .edit-form {
+        background: white;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 20px 60px rgba(255, 71, 87, 0.15);
+      }
+
+      .edit-form h2 {
+        margin-bottom: 24px;
+        color: #1e293b;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #475569;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #ff4757;
+        box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      /* Notification */
+      .notification {
+        position: fixed;
+        top: 100px;
+        right: 30px;
+        padding: 16px 28px;
+        border-radius: 100px;
+        color: white;
+        font-weight: 500;
+        z-index: 9999;
+        display: none;
+        animation: slideIn 0.3s ease;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .notification.show {
+        display: block;
+      }
+
+      .notification-success {
+        background: #10b981;
+      }
+
+      .notification-error {
+        background: #ef4444;
+      }
+
+      .notification-info {
+        background: #3b82f6;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* Footer */
+      footer {
+        background: #1a1a2e;
+        color: white;
+        padding: 60px 20px 20px;
+        margin-top: 60px;
+      }
+
+      .footer-container {
+        max-width: 1300px;
+        margin: 0 auto;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .footer-brand .logo {
+        color: white;
+        margin-bottom: 20px;
+      }
+
+      .footer-brand .logo span {
+        -webkit-text-fill-color: white;
+        background: none;
+        color: white;
+      }
+
+      .footer-brand p {
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.8;
+        margin-bottom: 25px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 12px;
+      }
+
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.6);
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .social-links a:hover {
+        background: #ff4757;
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      .footer-column h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        opacity: 0.7;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 12px;
+      }
+
+      .footer-column ul a {
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+      }
+
+      .footer-column ul a:hover {
+        color: #ff4757;
+        padding-left: 5px;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .profile-container {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .footer-content {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .page-content {
+          padding-top: 80px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .social-links {
+          justify-content: center;
+        }
+
+        .emergency-float {
+          bottom: 15px;
+          right: 15px;
+          padding: 10px 16px;
+        }
+
+        .emergency-float span:not(.phone-number) {
+          display: none;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .btn-group {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <a href="/" class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <span>LifeLink</span>
+        </a>
+
+        <button class="menu-btn" id="menuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/donate">Donate</a></li>
+          <li><a href="/request">Request</a></li>
+          <li><a href="/profile" class="active">Profile</a></li>
+          <li
+            style="
+              margin-top: 20px;
+              border-top: 1px solid #e2e8f0;
+              padding-top: 20px;
+              display: none;
+            "
+            class="mobile-only"
+          >
+            <a href="/login">Login</a>
+          </li>
+          <li style="display: none" class="mobile-only">
+            <a href="/register" style="background: #ff4757; color: white"
+              >Register</a
+            >
+          </li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="/login" class="btn-login">Log in</a>
+          <a href="/register" class="btn-register">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div
+      class="emergency-float"
+      onclick="window.location.href = 'tel:8867038197'"
+    >
+      <i class="fas fa-phone-alt"></i>
+      <span>Emergency</span>
+      <span class="phone-number">8867038197</span>
+    </div>
+
+    <div class="page-content">
+      <div class="profile-container">
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+          <div class="profile-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div id="profileInfo" class="info-grid">
+            <p><i class="fas fa-user"></i> <strong>Abhishek</strong></p>
+            <p><i class="fas fa-envelope"></i> a@gmail.com</p>
+            <p><i class="fas fa-phone"></i> 8867976543</p>
+            <p><i class="fas fa-map-marker-alt"></i> DSCE Bengalore</p>
+            <p><i class="fas fa-tint"></i> <strong>Blood Group:</strong> A+</p>
+            <p><i class="fas fa-calendar"></i> Member since: 26 Feb 2026</p>
+          </div>
+
+          <button class="btn btn-primary" id="editProfileBtn">
+            <i class="fas fa-edit"></i> Edit Profile
+          </button>
+
+          <div class="eligibility-card">
+            <h4><i class="fas fa-calendar-alt"></i> Next Eligible Donation</h4>
+            <div class="date">June 2, 2026</div>
+            <p class="note">
+              You can donate again in 95 days. Thank you for being a donor!
+            </p>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 15%"></div>
+            </div>
+          </div>
+
+          <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="profile-main">
+          <div class="stats-grid" id="userStats">
+            <div class="stat-card">
+              <i class="fas fa-tint"></i>
+              <h3>14</h3>
+              <p>Total Donations</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-hand-holding-heart"></i>
+              <h3>7</h3>
+              <p>Total Requests</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <h3>0</h3>
+              <p>Completed</p>
+            </div>
+          </div>
+
+          <div id="profileView">
+            <div class="section">
+              <h2><i class="fas fa-tint"></i> Recent Donations</h2>
+              <div class="history-list" id="recentDonations">
+                <div class="history-item">
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: start;
+                      margin-bottom: 8px;
+                    "
+                  >
+                    <span class="status-badge completed">
+                      <i class="fas fa-check-circle"></i> Completed
+                    </span>
+                    <span style="color: #94a3b8; font-size: 0.9rem"
+                      >27 Feb 2026</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 1fr 1fr;
+                      gap: 12px;
+                      margin-top: 12px;
+                    "
+                  >
+                    <div>
+                      <span style="color: #94a3b8; font-size: 0.8rem"
+                        >Blood Group</span
+                      >
+                      <p style="font-weight: 600; color: #ff4757">A+</p>
+                    </div>
+                    <div>
+                      <span style="color: #94a3b8; font-size: 0.8rem"
+                        >Donation Date</span
+                      >
+                      <p style="font-weight: 500">27 Feb 2026</p>
+                    </div>
+                    <div style="grid-column: span 2">
+                      <span style="color: #94a3b8; font-size: 0.8rem"
+                        >Center</span
+                      >
+                      <p style="font-weight: 500">Red Cross Society</p>
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-secondary btn-small"
+                    style="margin-top: 12px; width: 100%"
+                  >
+                    <i class="fas fa-download"></i> Download Certificate
+                  </button>
+                </div>
+
+                <div class="history-item">
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: start;
+                      margin-bottom: 8px;
+                    "
+                  >
+                    <span class="status-badge completed">
+                      <i class="fas fa-check-circle"></i> Completed
+                    </span>
+                    <span style="color: #94a3b8; font-size: 0.9rem"
+                      >3 Mar 2026</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: grid;
+                      grid-template-columns: 1fr 1fr;
+                      gap: 12px;
+                      margin-top: 12px;
+                    "
+                  >
+                    <div>
+                      <span style="color: #94a3b8; font-size: 0.8rem"
+                        >Blood Group</span
+                      >
+                      <p style="font-weight: 600; color: #ff4757">A-</p>
+                    </div>
+                    <div>
+                      <span style="color: #94a3b8; font-size: 0.8rem"
+                        >Donation Date</span
+                      >
+                      <p style="font-weight: 500">3 Mar 2026</p>
+                    </div>
+                    <div style="grid-column: span 2">
+                      <span style="color: #94a3b8; font-size: 0.8rem"
+                        >Center</span
+                      >
+                      <p style="font-weight: 500">City Blood Bank</p>
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-secondary btn-small"
+                    style="margin-top: 12px; width: 100%"
+                  >
+                    <i class="fas fa-download"></i> Download Certificate
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h2><i class="fas fa-hand-holding-heart"></i> Recent Requests</h2>
+              <div class="history-list" id="recentRequests">
+                <div class="empty-state">
+                  <i class="fas fa-hand-holding-heart"></i>
+                  <h3>No requests yet</h3>
+                  <p>
+                    You haven't made any blood requests. Need blood? Create your
+                    first request now.
+                  </p>
+                  <a
+                    href="/request"
+                    class="btn btn-primary btn-small"
+                    style="width: auto; display: inline-flex"
+                  >
+                    <i class="fas fa-plus"></i> Create Request
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-secondary"
+              id="downloadReport"
+              style="width: 100%"
+            >
+              <i class="fas fa-download"></i> Download Complete Report
+            </button>
+          </div>
+
+          <div id="profileEdit" class="profile-edit">
+            <div class="edit-form">
+              <h2>Edit Profile</h2>
+              <div class="form-group">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  id="editFullName"
+                  value="Abhishek"
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input
+                  type="tel"
+                  id="editPhone"
+                  value="8867976543"
+                  placeholder="10-digit mobile number"
+                  maxlength="10"
+                />
+              </div>
+              <div class="form-group">
+                <label>Address</label>
+                <textarea
+                  id="editAddress"
+                  rows="3"
+                  placeholder="Enter your address"
+                >
+DSCE Bengalore</textarea
+                >
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-primary" id="saveProfileBtn">
+                  Save Changes
+                </button>
+                <button class="btn btn-secondary" id="cancelEditBtn">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <a href="/" class="logo">
+              <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+              <span>LifeLink</span>
+            </a>
+            <p>
+              Modern blood donation platform connecting donors with those in
+              need. Every drop counts, every life matters.
+            </p>
+            <div class="social-links">
+              <a href="https://www.facebook.com/abhishek.madar.543/"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="https://x.com/Abhishek_madar_"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="https://www.instagram.com/abhishek_badagi_/"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="https://wa.me/8867038197"
+                ><i class="fab fa-whatsapp"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/donate">Donate Blood</a></li>
+              <li><a href="/request">Request Blood</a></li>
+              <li><a href="/profile">Profile</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Contact</h4>
+            <ul>
+              <li>
+                <a href="tel:8867038197"
+                  ><i class="fas fa-phone"></i> 8867038197</a
+                >
+              </li>
+              <li>
+                <a href="mailto:support@lifelink.com"
+                  ><i class="fas fa-envelope"></i> support@lifelink.com</a
+                >
+              </li>
+              <li><i class="fas fa-map-marker-alt"></i> Bangalore, India</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 LifeLink. All rights reserved. | Made with
+            <i class="fas fa-heart" style="color: #ff4757"></i> for saving lives
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const navLinks = document.getElementById("navLinks");
+      const overlay = document.getElementById("overlay");
+
+      function toggleMenu() {
+        navLinks.classList.toggle("active");
+        overlay.classList.toggle("active");
+        document.body.style.overflow = navLinks.classList.contains("active")
+          ? "hidden"
+          : "";
+      }
+
+      menuBtn.addEventListener("click", toggleMenu);
+      overlay.addEventListener("click", toggleMenu);
+
+      function updateMobileMenu() {
+        const mobileItems = document.querySelectorAll(".mobile-only");
+        if (window.innerWidth < 769) {
+          mobileItems.forEach((item) => (item.style.display = "block"));
+        } else {
+          mobileItems.forEach((item) => (item.style.display = "none"));
+        }
+      }
+
+      updateMobileMenu();
+      window.addEventListener("resize", updateMobileMenu);
+
+      const editProfileBtn = document.getElementById("editProfileBtn");
+      const cancelEditBtn = document.getElementById("cancelEditBtn");
+      const profileView = document.getElementById("profileView");
+      const profileEdit = document.getElementById("profileEdit");
+
+      if (editProfileBtn) {
+        editProfileBtn.addEventListener("click", function () {
+          profileView.style.display = "none";
+          profileEdit.style.display = "block";
+        });
+      }
+
+      if (cancelEditBtn) {
+        cancelEditBtn.addEventListener("click", function () {
+          profileView.style.display = "block";
+          profileEdit.style.display = "none";
+        });
+      }
+
+      function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+      }
+
+      function showNotification(message, type) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.className = `notification show notification-${type}`;
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      document.querySelectorAll(".btn-secondary").forEach((btn) => {
+        if (btn.textContent.includes("Download")) {
+          btn.addEventListener("click", function () {
+            showNotification("PDF generated successfully!", "success");
+          });
+        }
+      });
+    </script>
+    <script src="/js/profile.js"></script>
+  </body>
+</html>

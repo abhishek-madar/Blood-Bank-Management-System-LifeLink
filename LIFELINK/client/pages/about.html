@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - LifeLink</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      .page-content {
+        padding-top: 140px;
+        padding-bottom: 60px;
+      }
+      .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .page-header h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 12px;
+      }
+      .page-header h1 i {
+        color: #ff4757;
+      }
+      .mission-vision {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin-bottom: 60px;
+      }
+      .mission-box,
+      .vision-box {
+        padding: 45px;
+        border-radius: 24px;
+        color: white;
+      }
+      .mission-box {
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+      }
+      .vision-box {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      }
+      .mission-box i,
+      .vision-box i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+      .mission-box h2,
+      .vision-box h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+      .section-title {
+        text-align: center;
+        margin-bottom: 45px;
+      }
+      .section-title h2 {
+        font-size: 2.3rem;
+        color: #1a1a2e;
+        margin-bottom: 12px;
+      }
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        margin-bottom: 60px;
+      }
+      .benefit-card {
+        background: white;
+        padding: 35px 25px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(255, 71, 87, 0.12);
+      }
+      .benefit-card:hover {
+        transform: translateY(-10px);
+      }
+      .benefit-icon {
+        width: 75px;
+        height: 75px;
+        background: rgba(255, 71, 87, 0.1);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+      .benefit-icon i {
+        font-size: 1.8rem;
+        color: #ff4757;
+      }
+      .criteria-section {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 30px;
+        padding: 60px;
+        margin-bottom: 60px;
+      }
+      .criteria-section .section-title h2,
+      .criteria-section .section-title p {
+        color: white;
+      }
+      .criteria-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .criteria-card {
+        background: rgba(255, 255, 255, 0.08);
+        padding: 30px;
+        border-radius: 20px;
+      }
+      .criteria-card h3 {
+        color: #ff4757;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+      .criteria-card ul {
+        list-style: none;
+      }
+      .criteria-card li {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 14px;
+        padding-left: 28px;
+        position: relative;
+      }
+      .criteria-card li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #2ecc71;
+      }
+      .criteria-card li.no::before {
+        content: "✗";
+        color: #ff6b6b;
+      }
+      .cta-section {
+        text-align: center;
+        padding: 60px 40px;
+        background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+        border-radius: 24px;
+      }
+      .cta-section h2 {
+        font-size: 2rem;
+        color: #1a1a2e;
+        margin-bottom: 15px;
+      }
+      .btn-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 14px;
+        font-weight: 600;
+      }
+      @media (max-width: 1024px) {
+        .benefits-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .criteria-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        .mission-vision {
+          grid-template-columns: 1fr;
+        }
+        .benefits-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <a href="/" class="logo">
+          <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+          <span>LifeLink</span>
+        </a>
+        <div class="nav-menu">
+          <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about" class="active">About</a></li>
+            <li><a href="/donate">Donate</a></li>
+            <li><a href="/request">Request</a></li>
+            <li id="authLinks"></li>
+          </ul>
+        </div>
+        <div class="nav-cta" id="navCta">
+          <a href="/login" class="btn-login">Login</a>
+          <a href="/register" class="btn-register">Register</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="container">
+        <div class="page-header">
+          <h1><i class="fas fa-users"></i> About LifeLink</h1>
+          <p>
+            Learn more about our mission to save lives through technology and
+            community engagement.
+          </p>
+        </div>
+
+        <div class="mission-vision">
+          <div class="mission-box">
+            <i class="fas fa-bullseye"></i>
+            <h2>Our Mission</h2>
+            <p>
+              To ensure no patient dies waiting for blood by creating a smart,
+              real-time blood bank management system that connects donors with
+              those in need.
+            </p>
+          </div>
+          <div class="vision-box">
+            <i class="fas fa-eye"></i>
+            <h2>Our Vision</h2>
+            <p>
+              A world where every patient has immediate access to safe blood,
+              and every donation saves lives through technology-enabled
+              emergency response systems.
+            </p>
+          </div>
+        </div>
+
+        <div class="benefits-section">
+          <div class="section-title">
+            <h2>Why Donate Blood?</h2>
+            <p>Your donation makes a real difference</p>
+          </div>
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon"><i class="fas fa-heart"></i></div>
+              <h3>Saves Lives</h3>
+              <p>One donation can save up to three lives.</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon"><i class="fas fa-stethoscope"></i></div>
+              <h3>Health Check</h3>
+              <p>
+                Free health check-up including blood pressure and hemoglobin.
+              </p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon"><i class="fas fa-fire"></i></div>
+              <h3>Burns Calories</h3>
+              <p>Donating blood burns approximately 650 calories.</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon"><i class="fas fa-smile"></i></div>
+              <h3>Feel Good</h3>
+              <p>Experience the joy of saving lives.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="criteria-section">
+          <div class="section-title">
+            <h2>Who Can Donate?</h2>
+            <p>Check if you're eligible to donate blood</p>
+          </div>
+          <div class="criteria-grid">
+            <div class="criteria-card">
+              <h3><i class="fas fa-check-circle"></i> Eligibility</h3>
+              <ul>
+                <li>Age between 18-60 years</li>
+                <li>Weight above 50 kg</li>
+                <li>Good general health</li>
+                <li>Hemoglobin ≥ 12.5 g/dL</li>
+              </ul>
+            </div>
+            <div class="criteria-card">
+              <h3><i class="fas fa-clock"></i> Temporary Deferral</h3>
+              <ul>
+                <li class="no">Recent surgery (6 months)</li>
+                <li class="no">Pregnancy or breastfeeding</li>
+                <li class="no">Recent vaccination (1 month)</li>
+                <li class="no">Minor illness (1 week)</li>
+              </ul>
+            </div>
+            <div class="criteria-card">
+              <h3><i class="fas fa-ban"></i> Permanent Deferral</h3>
+              <ul>
+                <li class="no">HIV/AIDS</li>
+                <li class="no">Hepatitis B/C</li>
+                <li class="no">Heart disease</li>
+                <li class="no">Cancer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-section">
+          <h2>Ready to Save Lives?</h2>
+          <p>Join our community of heroes and make a difference today.</p>
+          <a href="/register" class="btn-cta">
+            <i class="fas fa-user-plus"></i> Register Now
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <a href="/" class="logo">
+              <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
+              <span>LifeLink</span>
+            </a>
+            <p>Connecting Hearts. Saving Lives.</p>
+            <div class="social-links">
+              <a href="https://www.facebook.com/abhishek.madar.543/"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="https://x.com/Abhishek_madar_"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="https://www.instagram.com/abhishek_badagi_/"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="https://wa.me/8867038197"
+                ><i class="fab fa-whatsapp"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/donate">Donate Blood</a></li>
+              <li><a href="/request">Request Blood</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="tel:8867038197">8867038197</a></li>
+              <li>
+                <a href="mailto:support@lifelink.com">support@lifelink.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 LifeLink. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>
